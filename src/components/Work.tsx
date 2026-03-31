@@ -11,12 +11,13 @@ const Work = () => {
   let translateX: number = 0;
 
   function setTranslateX() {
-    const box = document.getElementsByClassName("work-box");
-    const rectLeft = document
-      .querySelector(".work-container")!
-      .getBoundingClientRect().left;
+    const box = document.querySelectorAll(".work-box");
+    if (box.length === 0) return;
+    const workContainer = document.querySelector(".work-container");
+    if (!workContainer) return;
+    const rectLeft = workContainer.getBoundingClientRect().left;
     const rect = box[0].getBoundingClientRect();
-    const parentWidth = box[0].parentElement!.getBoundingClientRect().width;
+    const parentWidth = (box[0].parentElement as HTMLElement).getBoundingClientRect().width;
     let padding: number =
       parseInt(window.getComputedStyle(box[0]).padding) / 2;
     translateX = rect.width * box.length - (rectLeft + parentWidth) + padding;
@@ -24,26 +25,31 @@ const Work = () => {
 
   setTranslateX();
 
-  let timeline = gsap.timeline({
-    scrollTrigger: {
-      trigger: ".work-section",
-      start: "top top",
-      end: `+=${translateX}`, // Use actual scroll width
-      scrub: true,
-      pin: true,
-      id: "work",
+  if (translateX <= 0) {
+    translateX = 2000; // Fallback if calculation fails initially
+  }
+
+  const xSetter = gsap.quickSetter(".work-flex", "x", "px");
+
+  const workTrigger = ScrollTrigger.create({
+    trigger: ".work-section",
+    start: "top top",
+    end: () => `+=${translateX}`,
+    pin: true,
+    pinSpacing: true,
+    pinType: "transform",
+    scrub: true,
+    id: "work-pin",
+    onUpdate: (self) => {
+      xSetter(-translateX * self.progress);
     },
   });
 
-  timeline.to(".work-flex", {
-    x: -translateX,
-    ease: "none",
-  });
+  // Refresh to ensure spacer height is correct
+  ScrollTrigger.refresh();
 
-  // Clean up (optional, good practice)
   return () => {
-    timeline.kill();
-    ScrollTrigger.getById("work")?.kill();
+    workTrigger.kill();
   };
 }, []);
   return (
@@ -53,23 +59,62 @@ const Work = () => {
           My <span>Work</span>
         </h2>
         <div className="work-flex">
-          {[...Array(6)].map((_value, index) => (
-            <div className="work-box" key={index}>
-              <div className="work-info">
-                <div className="work-title">
-                  <h3>0{index + 1}</h3>
-
-                  <div>
-                    <h4>Project Name</h4>
-                    <p>Category</p>
-                  </div>
+          <div className="work-box">
+            <div className="work-info">
+              <div className="work-title">
+                <h3>01</h3>
+                <div>
+                  <h4>Paid Google Ads</h4>
+                  <p>Performance Marketing</p>
                 </div>
-                <h4>Tools and features</h4>
-                <p>Javascript, TypeScript, React, Threejs</p>
               </div>
-              <WorkImage image="/images/placeholder.webp" alt="" />
+              <h4>Tools and features</h4>
+              <p>Google Ads, Search Console, A/B Testing</p>
             </div>
-          ))}
+            <WorkImage image="/images/work_google_ads_new.jpg" alt="Google Ads Performance Marketing" />
+          </div>
+          <div className="work-box">
+            <div className="work-info">
+              <div className="work-title">
+                <h3>02</h3>
+                <div>
+                  <h4>Meta Ads Manager</h4>
+                  <p>Social Advertising</p>
+                </div>
+              </div>
+              <h4>Tools and features</h4>
+              <p>Facebook Ads, Instagram, Pixel Tracking</p>
+            </div>
+            <WorkImage image="/images/work_meta_ads_new.png" alt="Meta Ads Manager Social Advertising" />
+          </div>
+          <div className="work-box">
+            <div className="work-info">
+              <div className="work-title">
+                <h3>03</h3>
+                <div>
+                  <h4>Social Media Strategy</h4>
+                  <p>Organic Growth</p>
+                </div>
+              </div>
+              <h4>Tools and features</h4>
+              <p>Content Calendars, Engagement Analytics</p>
+            </div>
+            <WorkImage image="/images/work_content_calendar.png" alt="Social Media Strategy Organic Growth" />
+          </div>
+          <div className="work-box">
+            <div className="work-info">
+              <div className="work-title">
+                <h3>04</h3>
+                <div>
+                  <h4>Website & AI Automation</h4>
+                  <p>Digital Solutions</p>
+                </div>
+              </div>
+              <h4>Tools and features</h4>
+              <p>WordPress, Framer, Zapier, ChatGPT API</p>
+            </div>
+            <WorkImage image="/images/work_automation.jpg" alt="Website Creation and AI Tool Automation" />
+          </div>
         </div>
       </div>
     </div>

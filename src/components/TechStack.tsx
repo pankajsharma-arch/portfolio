@@ -13,20 +13,30 @@ import {
 
 const textureLoader = new THREE.TextureLoader();
 const imageUrls = [
-  "/images/react2.webp",
-  "/images/next2.webp",
-  "/images/node2.webp",
-  "/images/express.webp",
-  "/images/mongo.webp",
-  "/images/mysql.webp",
-  "/images/typescript.webp",
-  "/images/javascript.webp",
+  "/images/google_ads.png",
+  "/images/meta_ads.png",
+  "/images/shopify.png",
+  "/images/analytics.png",
+  "/images/mailchimp.png",
+  "/images/semrush.png",
+  "/images/instagram.png",
+  "/images/ai_tools.png",
+  "/images/linkedin.png",
+  "/images/github.png",
+  "/images/claude.png",
+  "/images/canva.png",
+  "/images/photoshop.png",
 ];
-const textures = imageUrls.map((url) => textureLoader.load(url));
+const textures = imageUrls.map((url) => {
+  const texture = textureLoader.load(url);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.anisotropy = 16;
+  return texture;
+});
 
 const sphereGeometry = new THREE.SphereGeometry(1, 28, 28);
 
-const spheres = [...Array(30)].map(() => ({
+const spheres = [...Array(18)].map(() => ({
   scale: [0.7, 1, 0.8, 1, 1][Math.floor(Math.random() * 5)],
 }));
 
@@ -147,8 +157,15 @@ const TechStack = () => {
       });
     });
     window.addEventListener("scroll", handleScroll);
+
+    // Refresh ScrollTrigger after canvas is ready
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 500);
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      clearTimeout(timer);
     };
   }, []);
   const materials = useMemo(() => {
@@ -158,20 +175,22 @@ const TechStack = () => {
           map: texture,
           emissive: "#ffffff",
           emissiveMap: texture,
-          emissiveIntensity: 0.3,
-          metalness: 0.5,
-          roughness: 1,
-          clearcoat: 0.1,
+          emissiveIntensity: 0.6,
+          metalness: 0.2,
+          roughness: 0.2,
+          clearcoat: 1,
+          transparent: true,
         })
     );
   }, []);
 
   return (
     <div className="techstack">
-      <h2> My Techstack</h2>
+      <h2> Skills <span>&</span> Expertise</h2>
 
       <Canvas
         shadows
+        dpr={[1, 2]}
         gl={{ alpha: true, stencil: false, depth: false, antialias: false }}
         camera={{ position: [0, 0, 20], fov: 32.5, near: 1, far: 100 }}
         onCreated={(state) => (state.gl.toneMappingExposure = 1.5)}

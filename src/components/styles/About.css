@@ -26,8 +26,18 @@
 .about-me p {
   font-size: 33px;
   font-weight: 600;
-  line-height: 36px;
+  line-height: 42px;
   letter-spacing: 1px;
+  color: #ffffff;
+  margin-bottom: 25px;
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+.about-me p span {
+  color: var(--accentColor);
+  text-decoration: underline;
+  text-underline-offset: 8px;
+  text-decoration-thickness: 2px;
 }
 
 @media only screen and (min-width: 600px) {

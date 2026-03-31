@@ -6,9 +6,10 @@ const About = () => {
       <div className="about-me">
         <h3 className="title">About Me</h3>
         <p className="para">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic quis
-          dolores numquam iusto Ratione earum ducimus autem id iure pariatur
-          dolorum quae maiores.
+          I'm a <span>Social Media Manager</span> and Freelance <span>Digital Marketer</span> focused on one core outcome: <span>generating real leads</span> and <span>measurable growth</span>.
+        </p>
+        <p className="para">
+          I specialize in building <span>performance-driven social media strategies</span>, managing paid campaigns on <span>Meta and Google</span>, and creating content that turns attention into action.
         </p>
       </div>
     </div>
