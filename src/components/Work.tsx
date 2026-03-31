@@ -1,5 +1,6 @@
 import "./styles/Work.css";
 import WorkImage from "./WorkImage";
+import WorkScene from "./WorkScene";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -8,7 +9,45 @@ gsap.registerPlugin(useGSAP);
 
 const Work = () => {
   useGSAP(() => {
-  let translateX: number = 0;
+    // 3D Tilt effect for boxes
+    const boxes = document.querySelectorAll(".work-box");
+    boxes.forEach((box) => {
+      const handleMouseMove = (e: any) => {
+        const { clientX, clientY, currentTarget } = e;
+        const { left, top, width, height } = currentTarget.getBoundingClientRect();
+        
+        const x = (clientX - left) / width - 0.5;
+        const y = (clientY - top) / height - 0.5;
+        
+        gsap.to(currentTarget, {
+          rotateY: x * 15,
+          rotateX: -y * 15,
+          transformPerspective: 1000,
+          ease: "power2.out",
+          duration: 0.5,
+        });
+      };
+      
+      const handleMouseLeave = (e: any) => {
+        gsap.to(e.currentTarget, {
+          rotateY: 0,
+          rotateX: 0,
+          transformPerspective: 1000,
+          ease: "power2.out",
+          duration: 0.5,
+        });
+      };
+      
+      box.addEventListener("mousemove", handleMouseMove);
+      box.addEventListener("mouseleave", handleMouseLeave);
+      
+      return () => {
+        box.removeEventListener("mousemove", handleMouseMove);
+        box.removeEventListener("mouseleave", handleMouseLeave);
+      };
+    });
+
+    let translateX: number = 0;
 
   function setTranslateX() {
     const box = document.querySelectorAll(".work-box");
@@ -54,6 +93,7 @@ const Work = () => {
 }, []);
   return (
     <div className="work-section" id="work">
+      <WorkScene />
       <div className="work-container section-container">
         <h2>
           My <span>Work</span>

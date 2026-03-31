@@ -120,7 +120,18 @@ body {
   }
 }
 @media screen and (max-width: 900px) {
-  .techstack h2 {
-    font-size: 40px;
+  .techstack {
+    margin-top: 100px;
+    margin-bottom: 150px;
+    height: 60vh;
   }
+  .techstack h2 {
+    font-size: 35px;
+    top: 60px;
+  }
+}
+.tech-canvas {
+  width: 100% !important;
+  height: 100% !important;
+  outline: none;
 }
