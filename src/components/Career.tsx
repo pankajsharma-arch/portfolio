@@ -15,40 +15,57 @@ const Career = () => {
           <div className="career-info-box">
             <div className="career-info-in">
               <div className="career-role">
-                <h4>Social Media & Marketing Manager</h4>
-                <h5>Educate and Elevate</h5>
+                <h4>Customer Service Representative</h4>
+                <a href="https://www.quampetence.com/" target="_blank" data-cursor="disable">
+                  <h5>Quampetence</h5>
+                </a>
               </div>
-              <h3>2025 - PRESENT</h3>
+              <h3 style={{ fontSize: "22px", color: "var(--accentColor)", opacity: 0.8 }}>May 2024 - May 2025</h3>
             </div>
             <p>
-              Lead end-to-end social media strategy and managed ₹100K+ in paid ad spend across Meta and Google Ads. 
-              Optimize campaigns for lead generation and ROI through continuous A/B testing and performance tracking.
+              Handled customer interactions across calls and digital channels, improving response efficiency and issue resolution time. Built strong communication and problem-solving skills by addressing customer queries, concerns, and service requests daily. Maintained accurate records of customer interactions and feedback to support service quality improvements. Developed client-facing communication skills that later supported audience engagement, community management, and brand interaction in social media roles.
             </p>
           </div>
           <div className="career-info-box">
             <div className="career-info-in">
               <div className="career-role">
                 <h4>Social Media Marketing Intern</h4>
-                <h5>SellingOS</h5>
+                <a href="https://sellingos.com/" target="_blank" data-cursor="disable">
+                  <h5>SellingOS</h5>
+                </a>
               </div>
-              <h3>2025</h3>
+              <h3 style={{ fontSize: "22px", color: "var(--accentColor)", opacity: 0.8 }}>Aug 2025 - Nov 2025</h3>
             </div>
             <p>
-              Designed brand-aligned creatives using Canva and Adobe Photoshop. 
-              Assisted in managing paid campaign setup, audience targeting, and competitor research to drive organic growth.
+              Supported planning and execution of social media campaigns across major platforms, focusing on content consistency, reach, and engagement growth. Handled customer queries across channels.
             </p>
           </div>
           <div className="career-info-box">
             <div className="career-info-in">
               <div className="career-role">
-                <h4>Customer Service Representative</h4>
-                <h5>Quampetence</h5>
+                <h4>Social Media Manager</h4>
+                <a href="https://houseofkaur.in/" target="_blank" data-cursor="disable">
+                  <h5>House Of kaur</h5>
+                </a>
               </div>
-              <h3>2024 - 2025</h3>
+              <h3 style={{ fontSize: "22px", color: "var(--accentColor)", opacity: 0.8 }}>Dec 2025 - Apr 2026</h3>
             </div>
             <p>
-              Handled high-volume customer interactions, improving response efficiency and resolution time. 
-              Developed client-facing communication skills that support current brand interaction and community management roles.
+              Designed and developed the brand website and setup the complete online store. Managed social media presence, created engaging posts to improve brand visibility and audience growth.
+            </p>
+          </div>
+          <div className="career-info-box">
+            <div className="career-info-in">
+              <div className="career-role">
+                <h4>Social Media & Marketing Manager</h4>
+                <a href="https://www.instagram.com/educateandelevates/" target="_blank" data-cursor="disable">
+                  <h5>Educate and Elevate</h5>
+                </a>
+              </div>
+              <h3 style={{ fontSize: "22px", color: "var(--accentColor)", opacity: 0.8 }}>Dec 2025 - Apr 2026</h3>
+            </div>
+            <p>
+              Led end-to-end social media strategy across Instagram, Facebook, LinkedIn, and YouTube. Managed 50K+ ad spend for lead generation, optimizing campaigns via A/B testing to improve ROI.
             </p>
           </div>
         </div>

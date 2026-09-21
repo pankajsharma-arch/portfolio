@@ -11,47 +11,54 @@ const Work = () => {
   let translateX: number = 0;
 
   function setTranslateX() {
-    const box = document.querySelectorAll(".work-box");
-    if (box.length === 0) return;
-    const workContainer = document.querySelector(".work-container");
-    if (!workContainer) return;
-    const rectLeft = workContainer.getBoundingClientRect().left;
-    const rect = box[0].getBoundingClientRect();
-    const parentWidth = (box[0].parentElement as HTMLElement).getBoundingClientRect().width;
-    let padding: number =
-      parseInt(window.getComputedStyle(box[0]).padding) / 2;
-    translateX = rect.width * box.length - (rectLeft + parentWidth) + padding;
+    const box = document.getElementsByClassName("work-box");
+    if (!box || box.length === 0) return;
+    const totalWidth = box[0].getBoundingClientRect().width * box.length;
+    translateX = totalWidth - window.innerWidth + 300;
+    if (translateX < 0) translateX = 0;
   }
 
-  setTranslateX();
+    let timeline: gsap.core.Timeline;
+    const initGSAP = setTimeout(() => {
+      setTranslateX();
 
-  if (translateX <= 0) {
-    translateX = 2000; // Fallback if calculation fails initially
-  }
+      timeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".work-section",
+          start: "top top",
+          end: () => {
+            setTranslateX();
+            return `+=${translateX}`;
+          },
+          scrub: true,
+          pin: true,
+          pinType: "transform",
+          id: "work",
+          invalidateOnRefresh: true,
+        },
+      });
 
-  const xSetter = gsap.quickSetter(".work-flex", "x", "px");
+      timeline.to(".work-flex", {
+        x: () => -translateX,
+        ease: "none",
+      });
+      
+      ScrollTrigger.refresh();
+    }, 100);
 
-  const workTrigger = ScrollTrigger.create({
-    trigger: ".work-section",
-    start: "top top",
-    end: () => `+=${translateX}`,
-    pin: true,
-    pinSpacing: true,
-    pinType: "transform",
-    scrub: true,
-    id: "work-pin",
-    onUpdate: (self) => {
-      xSetter(-translateX * self.progress);
-    },
-  });
+    return () => {
+      clearTimeout(initGSAP);
+      timeline?.kill();
+      ScrollTrigger.getById("work")?.kill();
+    };
+  }, []);
 
-  // Refresh to ensure spacer height is correct
-  ScrollTrigger.refresh();
-
-  return () => {
-    workTrigger.kill();
-  };
-}, []);
+  useGSAP(() => {
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <div className="work-section" id="work">
       <div className="work-container section-container">
@@ -59,62 +66,30 @@ const Work = () => {
           My <span>Work</span>
         </h2>
         <div className="work-flex">
-          <div className="work-box">
-            <div className="work-info">
-              <div className="work-title">
-                <h3>01</h3>
-                <div>
-                  <h4>Paid Google Ads</h4>
-                  <p>Performance Marketing</p>
+          {[
+            { title: "Social Media Management", category: "Social Media Marketing", tools: "Instagram, Facebook, LinkedIn, Content Strategy, Community Management", img: "/images/social_media.jpg" },
+            { title: "Meta & Google Ads", category: "Paid Advertising", tools: "Meta Ads, Google Ads, Campaign Strategy, Lead Generation, Performance Optimization", img: "/images/paid_ads.jpg" },
+            { title: "Content Strategy & Creation", category: "Content Marketing", tools: "Content Planning, Reels, Social Media Content, Copywriting, Brand Storytelling", img: "/images/content.jpg" },
+            { title: "Brand & Social Media Rebuild", category: "Brand Marketing", tools: "Brand Positioning, Instagram Strategy, Visual Direction, Content Strategy, Audience Research", img: "/images/brand.jpg" },
+            { title: "Website Creation", category: "Web Development", tools: "WordPress, Landing Pages, E-commerce Websites, Website Management", img: "/images/website.jpg" },
+            { title: "Sales Funnel & Conversion", category: "Conversion Marketing", tools: "Landing Pages, Sales Funnels, Lead Generation, Conversion Optimization", img: "/images/funnel.jpg" }
+          ].map((project, index) => (
+            <div className="work-box" key={index}>
+              <div className="work-info">
+                <div className="work-title">
+                  <h3>0{index + 1}</h3>
+
+                  <div>
+                    <h4>{project.title}</h4>
+                    <p>{project.category}</p>
+                  </div>
                 </div>
+                <h4>Tools and features</h4>
+                <p>{project.tools}</p>
               </div>
-              <h4>Tools and features</h4>
-              <p>Google Ads, Search Console, A/B Testing</p>
+              <WorkImage image={project.img} alt="" />
             </div>
-            <WorkImage image="/images/work_google_ads_new.jpg" alt="Google Ads Performance Marketing" />
-          </div>
-          <div className="work-box">
-            <div className="work-info">
-              <div className="work-title">
-                <h3>02</h3>
-                <div>
-                  <h4>Meta Ads Manager</h4>
-                  <p>Social Advertising</p>
-                </div>
-              </div>
-              <h4>Tools and features</h4>
-              <p>Facebook Ads, Instagram, Pixel Tracking</p>
-            </div>
-            <WorkImage image="/images/work_meta_ads_new.png" alt="Meta Ads Manager Social Advertising" />
-          </div>
-          <div className="work-box">
-            <div className="work-info">
-              <div className="work-title">
-                <h3>03</h3>
-                <div>
-                  <h4>Social Media Strategy</h4>
-                  <p>Organic Growth</p>
-                </div>
-              </div>
-              <h4>Tools and features</h4>
-              <p>Content Calendars, Engagement Analytics</p>
-            </div>
-            <WorkImage image="/images/work_content_calendar.png" alt="Social Media Strategy Organic Growth" />
-          </div>
-          <div className="work-box">
-            <div className="work-info">
-              <div className="work-title">
-                <h3>04</h3>
-                <div>
-                  <h4>Website & AI Automation</h4>
-                  <p>Digital Solutions</p>
-                </div>
-              </div>
-              <h4>Tools and features</h4>
-              <p>WordPress, Framer, Zapier, ChatGPT API</p>
-            </div>
-            <WorkImage image="/images/work_automation.jpg" alt="Website Creation and AI Tool Automation" />
-          </div>
+          ))}
         </div>
       </div>
     </div>

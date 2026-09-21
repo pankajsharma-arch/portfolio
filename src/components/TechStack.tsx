@@ -5,42 +5,31 @@ import { Environment } from "@react-three/drei";
 import { EffectComposer, N8AO } from "@react-three/postprocessing";
 import {
   BallCollider,
+  CuboidCollider,
   Physics,
   RigidBody,
-  CylinderCollider,
   RapierRigidBody,
 } from "@react-three/rapier";
 
 const textureLoader = new THREE.TextureLoader();
 const imageUrls = [
-  "/images/google_ads.png",
-  "/images/meta_ads.png",
-  "/images/shopify.png",
-  "/images/analytics.png",
-  "/images/mailchimp.png",
-  "/images/semrush.png",
-  "/images/instagram.png",
-  "/images/ai_tools.png",
-  "/images/linkedin.png",
-  "/images/github.png",
+  "/images/user_insta.jpg",
+  "/images/user_meta.png",
+  "/images/user_canva.jpg",
+  "/images/user_globe.jpg",
+  "/images/user_semrush.png",
+  "/images/chatgpt.png",
   "/images/claude.png",
-  "/images/canva.png",
-  "/images/photoshop.png",
 ];
-const textures = imageUrls.map((url) => {
-  const texture = textureLoader.load(url);
-  texture.colorSpace = THREE.SRGBColorSpace;
-  texture.anisotropy = 16;
-  return texture;
-});
+const textures = imageUrls.map((url) => textureLoader.load(url));
 
-const sphereGeometry = new THREE.SphereGeometry(1, 28, 28);
+const boxGeometry = new THREE.BoxGeometry(2, 2, 2);
 
-const spheres = [...Array(18)].map(() => ({
-  scale: [0.7, 1, 0.8, 1, 1][Math.floor(Math.random() * 5)],
+const items = [...Array(15)].map(() => ({
+  scale: [0.5, 0.7, 0.6, 0.8, 1][Math.floor(Math.random() * 5)],
 }));
 
-type SphereProps = {
+type ItemProps = {
   vec?: THREE.Vector3;
   scale: number;
   r?: typeof THREE.MathUtils.randFloatSpread;
@@ -48,13 +37,13 @@ type SphereProps = {
   isActive: boolean;
 };
 
-function SphereGeo({
+function ItemGeo({
   vec = new THREE.Vector3(),
   scale,
   r = THREE.MathUtils.randFloatSpread,
   material,
   isActive,
-}: SphereProps) {
+}: ItemProps) {
   const api = useRef<RapierRigidBody | null>(null);
 
   useFrame((_state, delta) => {
@@ -83,17 +72,12 @@ function SphereGeo({
       ref={api}
       colliders={false}
     >
-      <BallCollider args={[scale]} />
-      <CylinderCollider
-        rotation={[Math.PI / 2, 0, 0]}
-        position={[0, 0, 1.2 * scale]}
-        args={[0.15 * scale, 0.275 * scale]}
-      />
+      <CuboidCollider args={[scale, scale, scale]} />
       <mesh
         castShadow
         receiveShadow
         scale={scale}
-        geometry={sphereGeometry}
+        geometry={boxGeometry}
         material={material}
         rotation={[0.3, 1, 1]}
       />
@@ -157,15 +141,8 @@ const TechStack = () => {
       });
     });
     window.addEventListener("scroll", handleScroll);
-
-    // Refresh ScrollTrigger after canvas is ready
-    const timer = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 500);
-
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      clearTimeout(timer);
     };
   }, []);
   const materials = useMemo(() => {
@@ -175,22 +152,20 @@ const TechStack = () => {
           map: texture,
           emissive: "#ffffff",
           emissiveMap: texture,
-          emissiveIntensity: 0.6,
-          metalness: 0.2,
-          roughness: 0.2,
-          clearcoat: 1,
-          transparent: true,
+          emissiveIntensity: 0.3,
+          metalness: 0.5,
+          roughness: 1,
+          clearcoat: 0.1,
         })
     );
   }, []);
 
   return (
     <div className="techstack">
-      <h2> Skills <span>&</span> Expertise</h2>
+      <h2> SKILLS EXPERTISE</h2>
 
       <Canvas
         shadows
-        dpr={[1, 2]}
         gl={{ alpha: true, stencil: false, depth: false, antialias: false }}
         camera={{ position: [0, 0, 20], fov: 32.5, near: 1, far: 100 }}
         onCreated={(state) => (state.gl.toneMappingExposure = 1.5)}
@@ -208,11 +183,11 @@ const TechStack = () => {
         <directionalLight position={[0, 5, -4]} intensity={2} />
         <Physics gravity={[0, 0, 0]}>
           <Pointer isActive={isActive} />
-          {spheres.map((props, i) => (
-            <SphereGeo
+          {items.map((props, i) => (
+            <ItemGeo
               key={i}
               {...props}
-              material={materials[Math.floor(Math.random() * materials.length)]}
+              material={materials[i % materials.length]}
               isActive={isActive}
             />
           ))}

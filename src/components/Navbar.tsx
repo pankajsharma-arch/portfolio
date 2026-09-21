@@ -2,39 +2,58 @@ import { useEffect } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import HoverLinks from "./HoverLinks";
 import { gsap } from "gsap";
+import { ScrollSmoother } from "gsap-trial/ScrollSmoother";
 import "./styles/Navbar.css";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollSmoother, ScrollTrigger);
+export let smoother: ScrollSmoother;
 
 const Navbar = () => {
   useEffect(() => {
-    const links = document.querySelectorAll(".header ul a");
+    smoother = ScrollSmoother.create({
+      wrapper: "#smooth-wrapper",
+      content: "#smooth-content",
+      smooth: 0.8,
+      speed: 1,
+      effects: true,
+      autoResize: true,
+      ignoreMobileResize: true,
+    });
+
+    smoother.scrollTop(0);
+    smoother.paused(true);
+
+    let links = document.querySelectorAll(".header ul a");
     links.forEach((elem) => {
-      const element = elem as HTMLAnchorElement;
-      element.addEventListener("click", (e: any) => {
+      let element = elem as HTMLAnchorElement;
+      element.addEventListener("click", (e) => {
         if (window.innerWidth > 1024) {
           e.preventDefault();
-          const elem = e.currentTarget as HTMLAnchorElement;
-          const section = elem.getAttribute("data-href");
-          if (section) {
-            gsap.to(window, {
-              scrollTo: { y: section, autoKill: false },
-              duration: 1,
-              ease: "power3.inOut"
-            });
-          }
+          let elem = e.currentTarget as HTMLAnchorElement;
+          let section = elem.getAttribute("data-href");
+          smoother.scrollTo(section, true, "top top");
         }
       });
     });
+    window.addEventListener("resize", () => {
+      ScrollSmoother.refresh(true);
+    });
   }, []);
-
   return (
     <>
       <div className="header">
         <a href="/#" className="navbar-title" data-cursor="disable">
-          PANKAJ SHARMA.
+          Portfolio
         </a>
-        <div className="navbar-connect"></div>
+        
+        <img 
+          src="/images/sticker.png" 
+          alt="Sticker" 
+          className="navbar-connect" 
+          style={{ height: "60px", width: "auto" }}
+          data-cursor="disable"
+        />
+
         <ul>
           <li>
             <a data-href="#about" href="#about">

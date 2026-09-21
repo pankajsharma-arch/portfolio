@@ -48,9 +48,10 @@
 }
 .career-info-in {
   display: flex;
+  flex-direction: column;
   width: 40%;
-  justify-content: space-between;
-  gap: 50px;
+  justify-content: flex-start;
+  gap: 15px;
 }
 .career-info h3 {
   font-size: 48px;

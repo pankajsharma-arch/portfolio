@@ -5,13 +5,11 @@ import Contact from "./Contact";
 import Cursor from "./Cursor";
 import Landing from "./Landing";
 import Navbar from "./Navbar";
-import SocialIcons from "./SocialIcons";
+
 import WhatIDo from "./WhatIDo";
 import Work from "./Work";
 import setSplitText from "./utils/splitText";
-
 import TechStack from "./TechStack";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const MainContainer = ({ children }: PropsWithChildren) => {
   const [isDesktopView, setIsDesktopView] = useState<boolean>(
@@ -25,15 +23,8 @@ const MainContainer = ({ children }: PropsWithChildren) => {
     };
     resizeHandler();
     window.addEventListener("resize", resizeHandler);
-    
-    // Refresh ScrollTrigger after a short delay to ensure components are rendered
-    const refreshTimer = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 1000);
-
     return () => {
       window.removeEventListener("resize", resizeHandler);
-      clearTimeout(refreshTimer);
     };
   }, [isDesktopView]);
 
@@ -41,16 +32,20 @@ const MainContainer = ({ children }: PropsWithChildren) => {
     <div className="container-main">
       <Cursor />
       <Navbar />
-      <SocialIcons />
+
       {isDesktopView && children}
-      <div className="container-main">
-        <Landing>{!isDesktopView && children}</Landing>
-        <About />
-        <WhatIDo />
-        <Career />
-        <Work />
-        {isDesktopView && <TechStack />}
-        <Contact />
+      <div id="smooth-wrapper">
+        <div id="smooth-content">
+          <div className="container-main">
+            <Landing>{!isDesktopView && children}</Landing>
+            <About />
+            <WhatIDo />
+            <Career />
+            <Work />
+            {isDesktopView && <TechStack />}
+            <Contact />
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -87,20 +87,20 @@ const WhatIDo = () => {
             <div className="what-corner"></div>
 
             <div className="what-content-in">
-              <h3>ADS MANAGEMENT</h3>
-              <h4>Performance Marketing</h4>
+              <h3>SOCIAL MEDIA</h3>
+              <h4>Description</h4>
               <p>
-                Managing end-to-end social media strategy, content planning, and paid advertising with budgets of ₹100K+ to drive consistent leads.
+                Building and executing organic and paid social strategies that convert attention into qualified leads.
               </p>
               <h5>Skillset & tools</h5>
               <div className="what-content-flex">
                 <div className="what-tags">Meta Ads</div>
                 <div className="what-tags">Google Ads</div>
-                <div className="what-tags">Facebook Ads</div>
-                <div className="what-tags">Instagram Ads</div>
-                <div className="what-tags">Lead Gen</div>
                 <div className="what-tags">A/B Testing</div>
-                <div className="what-tags">KPI Tracking</div>
+                <div className="what-tags">Campaign Strategy</div>
+                <div className="what-tags">Semrush</div>
+                <div className="what-tags">SEO</div>
+                <div className="what-tags">Marketing Automation</div>
               </div>
               <div className="what-arrow"></div>
             </div>
@@ -125,19 +125,18 @@ const WhatIDo = () => {
             <div className="what-corner"></div>
             <div className="what-content-in">
               <h3>STRATEGY</h3>
-              <h4>Digital Growth</h4>
+              <h4>Description</h4>
               <p>
-                Crafting performance-driven strategies that combine creativity with data to help brands grow faster and smarter online.
+                Analyzing campaign metrics, creating funnels, and managing online presence to boost ROI and brand visibility.
               </p>
               <h5>Skillset & tools</h5>
               <div className="what-content-flex">
-                <div className="what-tags">Shopify</div>
-                <div className="what-tags">Canva</div>
-                <div className="what-tags">Photoshop</div>
-                <div className="what-tags">AI Automation</div>
+                <div className="what-tags">Brand Positioning</div>
+                <div className="what-tags">Lead Gen</div>
+                <div className="what-tags">Content Marketing</div>
+                <div className="what-tags">Community Management</div>
+                <div className="what-tags">ROI Optimization</div>
                 <div className="what-tags">Analytics</div>
-                <div className="what-tags">Content Planning</div>
-                <div className="what-tags">SEO</div>
               </div>
               <div className="what-arrow"></div>
             </div>
